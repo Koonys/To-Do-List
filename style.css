@@ -1,0 +1,190 @@
+body{
+    margin: 0px;
+    background-image: url("image/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+H1{
+    padding: 20px;
+    font-weight: 800;
+    padding-bottom: 0px;
+}
+.container{
+    background-color: white;
+    min-height: 100vh;
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 60px 100px, rgba(255, 255, 255, 0.1) 0px -20px 40px, rgba(255, 255, 255, 0.1) 0px 10px 20px, rgba(255, 255, 255, 0.1) 0px 20px 30px, rgba(255, 255, 255, 0.1) 0px -10px 20px;
+
+    padding: 5px;
+    min-width: 230px;
+}
+
+.task-tabs{
+    display: flex;
+    border-bottom: 1px solid lightgray;
+    position: relative;
+    min-width: 210px;
+}
+.task-tabs div{
+    padding: 1em;
+}
+.task-area{
+    border: 1px solid lightgray;
+    margin-left: 15px;
+}
+
+.task-area > *{
+    margin-left: 5px;
+}
+
+#under-line{
+    height: 4px;
+    background-color: blueviolet;
+    position: absolute;
+    width: 0%;
+    left: 0px;
+    top: 0px;
+    padding: 0px;
+    transition: 0.3s;
+}
+.task{
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5em;
+    width: 100%;
+    height: 4em;
+}
+
+.task-done{
+    text-decoration: line-through;
+    text-decoration-thickness: 3px;
+    background-color: lightgray;
+    transition: 2.0s;
+}
+
+.btn{
+    width: 5%;
+}
+
+.input-area{
+    display: flex;
+    padding: auto;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    align-items: center;
+    height: 3em;
+}
+
+.input-area > *{
+    height: 2em;
+}
+
+.input-area > .btn{
+    display: grid;
+    place-items: center;
+    max-width: 50px;
+    padding: 0px;
+}
+
+.task-content{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    width: 87%;
+    border-radius: 5px;
+    padding-left: 10px;
+    transition: 2.0s;
+}
+
+.task-button{
+    width: 12%;
+    padding: auto;
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+
+.task-button > .btn{
+    display: grid;
+    place-items: center;
+    margin-right: 5px;
+    padding: 0px;
+    height: 100%;
+    width: 48%;
+    min-width: 15%;
+}
+
+.task-button > .delete{
+    color: red;
+}
+
+.task-button > .check{
+    color: green;
+}
+
+.task-button > .return{
+    color: violet;
+}
+
+.input::placeholder{
+    text-align: center;
+    transition: 0.5s;
+}
+
+.input{
+    width: 15%;
+    border: 1px solid black;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    margin-left: 5px;
+    min-width: 120px;
+    max-width: 300px;
+    transition: 0.5s;
+}
+
+.input:focus{
+    width: 30%;
+    outline: none;
+    border-bottom: 1px solid black;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    transition: 1s;
+}
+
+.input-area > .btn{
+    margin: 5px;
+}
+
+.tabs{
+    cursor: pointer;
+}
+
+@media (max-width: 450px){
+    .container i{
+        font-size: 0.5em;
+    }
+    .task{
+        height: 2em;
+        font-size: 0.9em;
+        padding: 0.2em;
+    }
+    .input-area > *{
+        height: 30px;
+        min-width: 20px;
+    }
+
+    .task-tabs{
+        height: 3.5em;
+    }
+
+    .input{
+        min-width: 120px;
+    }
+}
+
+@media(max-width: 300px){
+    .task{
+        font-size: 0.7em;
+    }
+}
