@@ -14,7 +14,7 @@ H1{
     background-color: white;
     min-height: 100vh;
     box-shadow: rgba(255, 255, 255, 0.1) 0px 60px 100px, rgba(255, 255, 255, 0.1) 0px -20px 40px, rgba(255, 255, 255, 0.1) 0px 10px 20px, rgba(255, 255, 255, 0.1) 0px 20px 30px, rgba(255, 255, 255, 0.1) 0px -10px 20px;
-
+    border-radius: 2em;
     padding: 5px;
     min-width: 230px;
 }
@@ -134,8 +134,6 @@ H1{
 .input{
     width: 15%;
     border: 1px solid black;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
     margin-left: 5px;
     min-width: 120px;
     max-width: 300px;
