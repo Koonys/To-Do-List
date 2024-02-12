@@ -1,6 +1,6 @@
 body{
     margin: 0px;
-    background-image: url("image/background.jpg");
+    background-image: url("image/background2.jpeg");
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -12,12 +12,12 @@ H1{
 }
 .container{
     background-color: white;
-    min-height: 80vh;
+    min-height: 95vh;
     box-shadow: rgba(255, 255, 255, 0.1) 0px 60px 100px, rgba(255, 255, 255, 0.1) 0px -20px 40px, rgba(255, 255, 255, 0.1) 0px 10px 20px, rgba(255, 255, 255, 0.1) 0px 20px 30px, rgba(255, 255, 255, 0.1) 0px -10px 20px;
     border-radius: 2em;
     padding: 30px;
-    min-width: 230px;
-    max-width: 900px;
+    min-width: 400px;
+    width: 50%;
 }
 
 .task-tabs{
@@ -25,6 +25,8 @@ H1{
     border-bottom: 1px solid lightgray;
     position: relative;
     min-width: 210px;
+    margin-left: 0px;
+
 }
 .task-tabs div{
     padding: 1em;
@@ -32,10 +34,7 @@ H1{
 .task-area{
     border: 1px solid lightgray;
     margin-left: 15px;
-}
-
-.task-area > *{
-    margin-left: 5px;
+    min-width: 210px;
 }
 
 #under-line{
@@ -84,6 +83,7 @@ H1{
     display: grid;
     place-items: center;
     max-width: 50px;
+    min-width: 40px;
     padding: 0px;
 }
 
@@ -112,7 +112,7 @@ H1{
     padding: 0px;
     height: 100%;
     width: 48%;
-    min-width: 15%;
+    min-width: 18%;
 }
 
 .task-button > .delete{
@@ -145,9 +145,6 @@ H1{
     width: 30%;
     outline: none;
     border-bottom: 1px solid black;
-    border-top: none;
-    border-left: none;
-    border-right: none;
     transition: 1s;
 }
 
@@ -161,20 +158,11 @@ H1{
 
 @media (max-width: 450px){
     .container i{
-        font-size: 0.5em;
-    }
-    .task{
-        height: 2em;
-        font-size: 0.9em;
-        padding: 0.2em;
+        font-size: 5px;
     }
     .input-area > *{
         height: 30px;
         min-width: 20px;
-    }
-
-    .task-tabs{
-        height: 3.5em;
     }
 
     .input{
@@ -185,5 +173,16 @@ H1{
 @media(max-width: 300px){
     .task{
         font-size: 0.7em;
+    }
+}
+
+@media (max-width: 1050px){
+    .container i{
+        font-size: 0.7em;
+    }
+    .task{
+        height: 2em;
+        font-size: 0.9em;
+        padding: 0.2em;
     }
 }

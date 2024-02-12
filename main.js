@@ -17,6 +17,7 @@ let underline = document.getElementById("under-line");
 let taskList = [];
 let boardStatus = [];
 let board="all-board";
+let timerSet = false;
 
 for(let i=0;i<tabs.length;i++){
     tabs[i].addEventListener("click",function(e){
@@ -26,9 +27,13 @@ for(let i=0;i<tabs.length;i++){
 console.log(tabs);
 
 addButton.addEventListener("click",addTask);
-taskInput.addEventListener("keyup",function(e){
-    if(e.key === "Enter"){
-        addTask();
+taskInput.addEventListener("keydown",function(e){
+    if(e.key === "Enter" && !timerSet){
+        timerSet=true;
+        setTimeout(()=>{
+            addTask();
+            timerSet = false;
+        },100);
     };
 });
 resetButton.addEventListener("click",resetTask);
@@ -89,8 +94,8 @@ function deleteTask(id){
 function filter(e){
     if(e){
         board=e.target.id;
-        underline.style.left = e.currentTarget.offsetLeft +8 + "px";
-        underline.style.width = e.currentTarget.offsetWidth -16 + "px";
+        underline.style.left = e.currentTarget.offsetLeft + "px";
+        underline.style.width = e.currentTarget.offsetWidth + "px";
         underline.style.top = e.currentTarget.offsetTop + e.currentTarget.offsetHeight -2 + "px";
     }
     
