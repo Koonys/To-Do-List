@@ -39,7 +39,9 @@ taskInput.addEventListener("keydown",function(e){
 resetButton.addEventListener("click",resetTask);
 
 function addTask(){
-    if(taskInput.value!==""){
+    if(taskInput.value==null||taskInput.value.trim()==""){
+        alert("내용을 입력해주세요");
+    }else{
         let task ={
             id: randomId(),
             taskContent: taskInput.value,
@@ -48,8 +50,6 @@ function addTask(){
         }
         taskList.push(task);
         render();
-    }else{
-        alert("내용을 입력해주세요");
     }
     taskInput.value="";
 }
@@ -96,7 +96,11 @@ function modi(id){
     for(let i=0;i<taskList.length;i++){
         if(taskList[i].id==id){
             let modi = prompt();
-            taskList[i].taskContent = modi;
+            if(modi==null||modi.trim()===""){
+                alert("내용을 입력해주세요");
+            }else{
+                taskList[i].taskContent = modi;
+            }
             }
     }
     filter();
