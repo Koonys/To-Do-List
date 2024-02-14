@@ -98,8 +98,10 @@ function modi(id){
             let modiCheck=true;
             while(modiCheck){
                 let modi = prompt();
-                if(modi==null||modi.trim()===""){
-                    modiCheck = !confirm("내용을 입력해야 수정됩니다, 수정을 취소하시겠습니까?");
+                if(modi==null){
+                    modiCheck = false;
+                }else if(modi.trim()===""){
+                    modiCheck = !confirm("내용을 입력해야 수정됩니다. 수정을 취소하시겠습니까?");
                 }else{
                     taskList[i].taskContent = modi;
                     modiCheck=false;
