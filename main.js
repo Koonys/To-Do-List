@@ -64,7 +64,7 @@ function render(){
     }
     for(let i=0;i<list.length;i++){
         if(list[i].isComplete==true){
-            resultHTML+=`<div class="task"><div id="${list[i].id}" class="task-done task-content">${list[i].taskContent}</div><div class="task-button"><button class="btn btn-light" onclick="modi('${list[i].id}')"><i class="fa-regular fa-pen-to-square"></i></button></button></button><button class="btn btn-light return" onclick="toggleComplete('${list[i].id}')"><i class="fa-solid fa-rotate-left"></i></button><button class="btn btn-light delete" onclick="deleteTask('${list[i].id}')"><i class="fa-solid fa-eraser"></i></button></div></div>`;
+            resultHTML+=`<div class="task"><div id="${list[i].id}" class="task-done task-content">${list[i].taskContent}</div><div class="task-button"><button class="btn btn-light" onclick="modi('${list[i].id}')" disabled><i class="fa-regular fa-pen-to-square"></i></button></button></button><button class="btn btn-light return" onclick="toggleComplete('${list[i].id}')"><i class="fa-solid fa-rotate-left"></i></button><button class="btn btn-light delete" onclick="deleteTask('${list[i].id}')"><i class="fa-solid fa-eraser"></i></button></div></div>`;
         }else{
             resultHTML += `<div class="task"><div id="${list[i].id}" class="task-content">${list[i].taskContent}</div><div class="task-button"><button class="btn btn-light" onclick="modi('${list[i].id}')"><i class="fa-regular fa-pen-to-square"></i></button><button class="btn btn-light check" onclick="toggleComplete('${list[i].id}')"><i class="fa-solid fa-circle-check"></i></button><button class="btn btn-light delete" onclick="deleteTask('${list[i].id}')"><i class="fa-solid fa-eraser"></i></button></div></div>`;
         }
