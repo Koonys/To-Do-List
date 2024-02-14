@@ -95,11 +95,11 @@ function deleteTask(id){
 function modi(id){
     for(let i=0;i<taskList.length;i++){
         if(taskList[i].id==id){
-            let taskContent = document.getElementById(id);
             let modi = prompt();
-            taskContent.innerText = modi;
+            taskList[i].taskContent = modi;
             }
     }
+    filter();
 }
 
 function filter(e){
