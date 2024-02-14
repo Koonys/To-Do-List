@@ -39,16 +39,17 @@ taskInput.addEventListener("keydown",function(e){
 resetButton.addEventListener("click",resetTask);
 
 function addTask(){
-    if(taskInput.value!==""&&taskInput.value.length<21){
+    if(taskInput.value!==""){
         let task ={
             id: randomId(),
             taskContent: taskInput.value,
-            isComplete: false
+            isComplete: false,
+            isModify : false
         }
         taskList.push(task);
         render();
     }else{
-        alert("내용이 없거나 내용이 너무 깁니다");
+        alert("내용을 입력해주세요");
     }
     taskInput.value="";
 }
@@ -63,9 +64,9 @@ function render(){
     }
     for(let i=0;i<list.length;i++){
         if(list[i].isComplete==true){
-            resultHTML+=`<div class="task"><div class="task-done task-content">${list[i].taskContent}</div><div class="task-button"><button class="btn btn-light return" onclick="toggleComplete('${list[i].id}')"><i class="fa-solid fa-rotate-left"></i></button><button class="btn btn-light delete" onclick="deleteTask('${list[i].id}')"><i class="fa-solid fa-eraser"></i></button></div></div>`;
+            resultHTML+=`<div class="task"><div id="${list[i].id}" class="task-done task-content">${list[i].taskContent}</div><div class="task-button"><button class="btn btn-light" onclick="modi('${list[i].id}')"><i class="fa-regular fa-pen-to-square"></i></button></button></button><button class="btn btn-light return" onclick="toggleComplete('${list[i].id}')"><i class="fa-solid fa-rotate-left"></i></button><button class="btn btn-light delete" onclick="deleteTask('${list[i].id}')"><i class="fa-solid fa-eraser"></i></button></div></div>`;
         }else{
-            resultHTML += `<div class="task"><div class="task-content">${list[i].taskContent}</div><div class="task-button"><button class="btn btn-light check" onclick="toggleComplete('${list[i].id}')"><i class="fa-solid fa-circle-check"></i></button><button class="btn btn-light delete" onclick="deleteTask('${list[i].id}')"><i class="fa-solid fa-eraser"></i></button></div></div>`;
+            resultHTML += `<div class="task"><div id="${list[i].id}" class="task-content">${list[i].taskContent}</div><div class="task-button"><button class="btn btn-light" onclick="modi('${list[i].id}')"><i class="fa-regular fa-pen-to-square"></i></button><button class="btn btn-light check" onclick="toggleComplete('${list[i].id}')"><i class="fa-solid fa-circle-check"></i></button><button class="btn btn-light delete" onclick="deleteTask('${list[i].id}')"><i class="fa-solid fa-eraser"></i></button></div></div>`;
         }
     }
     document.getElementById("task-board").innerHTML = resultHTML;
@@ -89,6 +90,16 @@ function deleteTask(id){
         }
     }
     filter();
+}
+
+function modi(id){
+    for(let i=0;i<taskList.length;i++){
+        if(taskList[i].id==id){
+            let taskContent = document.getElementById(id);
+            let modi = prompt();
+            taskContent.innerText = modi;
+            }
+    }
 }
 
 function filter(e){

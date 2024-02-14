@@ -50,16 +50,16 @@ H1{
 .task{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 0.5em;
     width: 100%;
-    height: 4em;
+    height: auto;
 }
 
 .task-done{
     text-decoration: line-through;
     text-decoration-thickness: 3px;
     background-color: lightgray;
-    transition: 2.0s;
 }
 
 .btn{
@@ -89,20 +89,24 @@ H1{
 
 .task-content{
     display: flex;
-    text-align: center;
+    text-align: left;
     align-items: center;
-    width: 87%;
+    width: 80%;
     border-radius: 5px;
     padding-left: 10px;
-    transition: 2.0s;
+    padding-right: 10px;
+    transition: 0.5s;
+    min-height: 60px;
+    margin-right: 5px;
 }
 
 .task-button{
-    width: 12%;
+    width: 20%;
     padding: auto;
     display: flex;
     text-align: center;
     align-items: center;
+    height: 60px;
 }
 
 .task-button > .btn{
@@ -168,6 +172,11 @@ H1{
     .input{
         min-width: 120px;
     }
+
+    .task-content{
+        font-size: 9pt;
+        line-height: 1;
+    }
 }
 
 @media(max-width: 300px){
@@ -181,8 +190,15 @@ H1{
         font-size: 0.7em;
     }
     .task{
-        height: 2em;
-        font-size: 0.9em;
+        height: auto;
         padding: 0.2em;
+    }
+    .task-content{
+        font-size: 10pt;
+        line-height: 1;
+    }
+
+    .task-button{
+        max-height: 40px;
     }
 }
