@@ -95,13 +95,17 @@ function deleteTask(id){
 function modi(id){
     for(let i=0;i<taskList.length;i++){
         if(taskList[i].id==id){
-            let modi = prompt();
-            if(modi==null||modi.trim()===""){
-                alert("내용을 입력해주세요");
-            }else{
-                taskList[i].taskContent = modi;
+            let modiCheck=true;
+            while(modiCheck){
+                let modi = prompt();
+                if(modi==null||modi.trim()===""){
+                    modiCheck = !confirm("내용을 입력해야 수정됩니다, 수정을 취소하시겠습니까?");
+                }else{
+                    taskList[i].taskContent = modi;
+                    modiCheck=false;
+                }
             }
-            }
+        }
     }
     filter();
 }
