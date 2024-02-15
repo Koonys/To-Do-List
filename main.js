@@ -94,6 +94,7 @@ function deleteTask(id){
 function modi(id){
     for(let i=0;i<taskList.length;i++){
         if(taskList[i].id==id){
+            //프롬프트 입력 내용에 따라 while함수로 사용자의 UX 고려
             let modiCheck=true;
             while(modiCheck){
                 let modi = prompt();
@@ -137,19 +138,24 @@ function filter(e){
 }
 
 const item = document.querySelector(".list");
+//드래그가 시작될때 이벤트 위임으로 대상 엘리먼트를 찾는 로직 적용(div를 드래그하기 위해서 div에 draggable="true" 속성 부여)
 item.addEventListener("dragstart",(e)=>{
     if(e.target.classList.contains("task")){
         draggedTask = e.target;
+        //드래그 중인 엘리먼트에 클래스를 추가하여 css 적용
         e.target.classList.add("dragging");
+        //드래그되어 이동하는 엘리먼트의 데이터를 저장하기 위한 메서드들을 사용
         e.dataTransfer.effectAllowed = "move";
-        e.dataTransfer.setData("text.plain",draggedTask.id);
+        e.dataTransfer.setData("text/plain",draggedTask.id);
     }
 })
 
+//드래그가 완료되어 드랍될때 발생하는 이벤트
 item.addEventListener("dragend",(e)=>{
     e.target.classList.remove("dragging");
     draggedTask=null;
 
+    //taskList를 드래그엔드랍으로 변경된 리스트로 재배열하는 로직 > 랜더링 시 드래드앤드랍으로 변경된 순서 초기화 방지
     const newTaskList = [];
     const tasks = item.querySelectorAll(".task");
     tasks.forEach(function(task){
@@ -164,12 +170,15 @@ item.addEventListener("dragend",(e)=>{
     render();
 })
 
+// 드래그오버 이벤트 리스너 >> 드래그된 대상이 호버될때 발생
 item.addEventListener("dragover",function(e){
     e.preventDefault();
     if(e.target.classList.contains("task")){
+        // 마우스위치와 가장 가까운 엘리먼트를 찾는 함수(대상 엘리먼트, Y좌표)
         const afterElement = getDragAfterElement(item, e.clientY);
-        console.log(afterElement);
+        // 드래그중인 draggedTask의 아이디로 엘리먼트를 찾아서 변수 초기화
         const taskBeingDragged = document.getElementById(draggedTask.id);
+        // 가장가까운 위치의 엘리먼트를 기준으로 추가하는 로직(없으면 맨아래로, 있으면 대상 엘리먼트 위로)
         if (afterElement == null) {
             item.appendChild(taskBeingDragged);
         } else {
@@ -179,7 +188,9 @@ item.addEventListener("dragover",function(e){
 });
 
 function getDragAfterElement(container, y) {
+    //.task 중 .dragging 제외한 엘리먼트를 배열에 저장
     const draggableElements = [...container.querySelectorAll('.task:not(.dragging)')];
+    //배열에 저장된 엘리먼트 중에서 reduce메서드로 마우스 위치를 기준으로 가장가까운 엘리먼트 위치를 반환
     return draggableElements.reduce((closest, child) => {
         const box = child.getBoundingClientRect();
         const offset = y - box.top - box.height / 2;
@@ -199,5 +210,5 @@ function randomId(){
 
 function resetTask(){
     taskList = [];
-    document.getElementById("task-board").innerHTML = "";
+    document.getElementById("sortable-list").innerHTML = "";
 }

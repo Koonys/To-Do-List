@@ -160,6 +160,10 @@ H1{
     cursor: pointer;
 }
 
+.dragging{
+    background-color: mistyrose;
+}
+
 @media (max-width: 450px){
     .container i{
         font-size: 5px;
