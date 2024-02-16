@@ -201,16 +201,7 @@ function editDate(id){
                 }else{
                     editDate = new Date(editDate);
                     if(isNaN(editDate)){
-                        editDate = prompt("올바른 날짜 형식을 입력하세요",`${dateCheck}`);
-                        if(editDate==null){
-                            editDate=taskList[i].isDoneDate;
-                            editCheck=false;
-                        }else if(editDate.trim()==""){
-                            editDate=taskList[i].isDoneDate;
-                            editCheck=false;
-                        }else{
-                            loop=1;
-                        }
+                        alert("올바른 날짜 형식을 입력하세요");
                     }else{
                         taskList[i].isDoneDate = isDate(editDate);
                         editCheck=false;
