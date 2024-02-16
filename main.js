@@ -188,10 +188,11 @@ function editDate(id){
     for(let i=0;i<taskList.length;i++){
         if(taskList[i].id==id){
             let editCheck=true;
+            let loop = 0;
+            let dateCheck = taskList[i].isDoneDate=="" ? isDate() : taskList[i].isDoneDate;
             while(editCheck){
-                let dateCheck = taskList[i].isDoneDate=="" ? isDate() : taskList[i].isDoneDate;
                 let editDate = prompt("날짜를 수정하세요",`${dateCheck}`);
-                if(editDate==null){
+                if(editDate==null||loop==1){
                     editDate=taskList[i].isDoneDate;
                     editCheck=false;
                 }else if(editDate.trim()==""){
@@ -208,7 +209,7 @@ function editDate(id){
                             editDate=taskList[i].isDoneDate;
                             editCheck=false;
                         }else{
-                            break;
+                            loop=1;
                         }
                     }else{
                         taskList[i].isDoneDate = isDate(editDate);
