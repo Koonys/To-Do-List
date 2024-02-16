@@ -51,6 +51,7 @@ resetButton.addEventListener("click",resetTask);
 function addTask(){
     if(taskInput.value==null||taskInput.value.trim()==""){
         document.getElementById("alert").style.visibility="visible";
+        return;
     }else{
         let task ={
             id: randomId(),
@@ -72,6 +73,7 @@ function addTask(){
         taskList.push(task);
         filter();
     }
+    document.getElementById("alert").style.visibility="hidden";
     taskInput.value="";
     taskDate.value="";
 }
@@ -183,22 +185,31 @@ function deleteTask(id){
 }
 
 function editDate(id){
-    console.log(id);
     for(let i=0;i<taskList.length;i++){
         if(taskList[i].id==id){
             let editCheck=true;
             while(editCheck){
-                console.log("isDone"+taskList[i].isDoneDate);
                 let dateCheck = taskList[i].isDoneDate=="" ? isDate() : taskList[i].isDoneDate;
                 let editDate = prompt("날짜를 수정하세요",`${dateCheck}`);
                 if(editDate==null){
-                    editCheck = !confirm("목표일을 미설정 하시겠습니까?");
+                    editDate=taskList[i].isDoneDate;
+                    editCheck=false;
                 }else if(editDate.trim()==""){
-                    editCheck = !confirm("목표일을 미설정 하시겠습니까?");
+                    editDate=taskList[i].isDoneDate;
+                    editCheck=false;
                 }else{
                     editDate = new Date(editDate);
                     if(isNaN(editDate)){
                         editDate = prompt("올바른 날짜 형식을 입력하세요",`${dateCheck}`);
+                        if(editDate==null){
+                            editDate=taskList[i].isDoneDate;
+                            editCheck=false;
+                        }else if(editDate.trim()==""){
+                            editDate=taskList[i].isDoneDate;
+                            editCheck=false;
+                        }else{
+                            break;
+                        }
                     }else{
                         taskList[i].isDoneDate = isDate(editDate);
                         editCheck=false;
