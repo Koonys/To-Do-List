@@ -14,16 +14,27 @@ let addButton = document.getElementById("add-button");
 let resetButton = document.getElementById("reset-button");
 let tabs = document.querySelectorAll(".tabs");
 let underline = document.getElementById("under-line");
+let taskDate =document.getElementById("task-date");
 let taskList = [];
 let boardStatus = [];
 let board="all-board";
 let timerSet = false;
 
+const sysDate = new Date();
+console.log("프로그래스를 위해 과거 날짜기준으로 할일 추가 날짜가 설정 되도록 해놓았습니다");
 for(let i=0;i<tabs.length;i++){
     tabs[i].addEventListener("click",function(e){
         filter(e)
     });
 }
+
+taskInput.addEventListener("focus",(e)=>{
+    document.getElementById("alert").style.visibility="hidden";
+    e.target.style.backgroundColor="lightGray";
+    setTimeout(()=>{
+        e.target.style.backgroundColor="white"
+    },100);
+});
 
 addButton.addEventListener("click",addTask);
 taskInput.addEventListener("keydown",function(e){
@@ -39,18 +50,55 @@ resetButton.addEventListener("click",resetTask);
 
 function addTask(){
     if(taskInput.value==null||taskInput.value.trim()==""){
-        alert("내용을 입력해주세요");
+        document.getElementById("alert").style.visibility="visible";
     }else{
         let task ={
             id: randomId(),
             taskContent: taskInput.value,
             isComplete: false,
-            isModify : false
+            isModify : false,
+            isDate : "2024-01-15", //프로그래스 적용 확인을 위해 과거 날짜 설정 > isDate() 함수 호출시 제대로 작동함
+            isDoneDate : taskDate.value,
+            isProgress : ""
+        }
+        task.isProgress = Math.round((Progress(task.isDate,task.isDoneDate)));
+        if(isNaN(task.isProgress)){
+            task.isProgress="목표일 미설정";
+        }else if(task.isProgress>100){
+            task.isProgress="100%";
+        }else{
+            task.isProgress=task.isProgress+"%";
         }
         taskList.push(task);
-        render();
+        filter();
     }
     taskInput.value="";
+    taskDate.value="";
+}
+
+function Progress(isDate,isDoneDate){
+    isDate = new Date(isDate);
+    isDoneDate = new Date(isDoneDate);
+    if(isDate instanceof Date&&isDoneDate instanceof Date){
+        let isTime = Math.abs(isDoneDate.getTime() - isDate.getTime());
+        let sysTime = Math.abs(sysDate.getTime() - isDate.getTime());
+        let timeProgress = (sysTime/isTime)*100;
+        return timeProgress;
+    }else{
+        return 0;
+    }
+}
+
+function isDate(a){
+    if(!a){
+        a = new Date();
+    }
+    let isDate = new Date(a);
+    let year = isDate.getFullYear();
+    let month = String(isDate.getMonth()+1);
+    let date = String(isDate.getDate());
+
+    return `${year}-${month}-${date}`;
 }
 
 function render(){
@@ -63,9 +111,52 @@ function render(){
     }
     for(let i=0;i<list.length;i++){
         if(list[i].isComplete==true){
-            resultHTML+=`<div class="task" id="${list[i].id}" draggable="true"><div class="task-done task-content">${list[i].taskContent}</div><div class="task-button"><button class="btn btn-light" onclick="modi('${list[i].id}')" disabled><i class="fa-regular fa-pen-to-square"></i></button></button></button><button class="btn btn-light return" onclick="toggleComplete('${list[i].id}')"><i class="fa-solid fa-rotate-left"></i></button><button class="btn btn-light delete" onclick="deleteTask('${list[i].id}')"><i class="fa-solid fa-eraser"></i></button></div></div>`;
+            resultHTML+=
+            `<div class="task" id="${list[i].id}" draggable="true">
+                <div class="tasks">
+                    <div class="task-done task-content">${list[i].taskContent}</div>
+                    <div class="date-progress">
+                        <div class="progress">
+                            <div id="progress${list[i].id}" class="progressResult" style="width: ${list[i].isProgress}">${list[i].isProgress}</div>
+                        </div>
+                        <div class="date" onclick="editDate('${list[i].id}');">${list[i].isDoneDate}</div>
+                    </div>
+                </div>
+                <div class="task-button">
+                    <button class="btn btn-light" onclick="modi('${list[i].id}')" disabled>
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                    <button class="btn btn-light return" onclick="toggleComplete('${list[i].id}')" title="되돌리기">
+                        <i class="fa-solid fa-rotate-left"></i></button>
+                    <button class="btn btn-light delete" onclick="deleteTask('${list[i].id}')" title="지우기">
+                    <i class="fa-solid fa-x"></i>
+                    </button>
+                </div>
+            </div>`;
         }else{
-            resultHTML += `<div class="task" id="${list[i].id}" draggable="true"><div class="task-content">${list[i].taskContent}</div><div class="task-button"><button class="btn btn-light" onclick="modi('${list[i].id}')"><i class="fa-regular fa-pen-to-square"></i></button><button class="btn btn-light check" onclick="toggleComplete('${list[i].id}')"><i class="fa-solid fa-circle-check"></i></button><button class="btn btn-light delete" onclick="deleteTask('${list[i].id}')"><i class="fa-solid fa-eraser"></i></button></div></div>`;
+            resultHTML +=
+            `<div class="task" id="${list[i].id}" draggable="true">
+                <div class="tasks">
+                    <div class="task-content">${list[i].taskContent}</div>
+                    <div class="date-progress">
+                        <div class="progress">
+                            <div id="progress${list[i].id}" class="progressResult" style="width: ${list[i].isProgress}">${list[i].isProgress}</div>
+                        </div>
+                        <div class="date" onclick="editDate('${list[i].id}');">${list[i].isDoneDate}</div>
+                    </div>
+                </div>
+                <div class="task-button">
+                    <button class="btn btn-light" onclick="modi('${list[i].id}')" title="수정하기">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                    <button class="btn btn-light check" onclick="toggleComplete('${list[i].id}')" title="완료하기">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </button>
+                    <button class="btn btn-light delete" onclick="deleteTask('${list[i].id}')" title="지우기">
+                    <i class="fa-solid fa-x"></i>
+                    </button>
+                </div>
+            </div>`;
         }
     }
     document.getElementById("sortable-list").innerHTML = resultHTML;
@@ -91,13 +182,49 @@ function deleteTask(id){
     filter();
 }
 
+function editDate(id){
+    console.log(id);
+    for(let i=0;i<taskList.length;i++){
+        if(taskList[i].id==id){
+            let editCheck=true;
+            while(editCheck){
+                console.log("isDone"+taskList[i].isDoneDate);
+                let dateCheck = taskList[i].isDoneDate=="" ? isDate() : taskList[i].isDoneDate;
+                let editDate = prompt("날짜를 수정하세요",`${dateCheck}`);
+                if(editDate==null){
+                    editCheck = !confirm("목표일을 미설정 하시겠습니까?");
+                }else if(editDate.trim()==""){
+                    editCheck = !confirm("목표일을 미설정 하시겠습니까?");
+                }else{
+                    editDate = new Date(editDate);
+                    if(isNaN(editDate)){
+                        editDate = prompt("올바른 날짜 형식을 입력하세요",`${dateCheck}`);
+                    }else{
+                        taskList[i].isDoneDate = isDate(editDate);
+                        editCheck=false;
+                    }
+                }
+            }
+            taskList[i].isProgress = Math.round((Progress(taskList[i].isDate,taskList[i].isDoneDate)));
+            if(isNaN(taskList[i].isProgress)){
+                taskList[i].isProgress="목표일 미설정";
+            }else if(taskList[i].isProgress>100){
+                taskList[i].isProgress="100%";
+            }else{
+                taskList[i].isProgress=taskList[i].isProgress+"%";
+            }
+        }
+    }
+    filter();
+};
+
 function modi(id){
     for(let i=0;i<taskList.length;i++){
         if(taskList[i].id==id){
             //프롬프트 입력 내용에 따라 while함수로 사용자의 UX 고려
             let modiCheck=true;
             while(modiCheck){
-                let modi = prompt();
+                let modi = prompt("수정내용을 입력하세요",`${taskList[i].taskContent}`);
                 if(modi==null){
                     modiCheck = false;
                 }else if(modi.trim()===""){
@@ -209,6 +336,8 @@ function randomId(){
 }
 
 function resetTask(){
-    taskList = [];
-    document.getElementById("sortable-list").innerHTML = "";
+    if(confirm("정말 할일을 초기화 하시겠습니까?")){
+        taskList = [];
+        document.getElementById("sortable-list").innerHTML = "";
+    }
 }
