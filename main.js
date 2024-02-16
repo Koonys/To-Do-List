@@ -121,7 +121,7 @@ function render(){
                         <div class="progress">
                             <div id="progress${list[i].id}" class="progressResult" style="width: ${list[i].isProgress}">${list[i].isProgress}</div>
                         </div>
-                        <div class="date" onclick="editDate('${list[i].id}');">${list[i].isDoneDate}</div>
+                        <div class="date";">${list[i].isDoneDate}</div>
                     </div>
                 </div>
                 <div class="task-button">
